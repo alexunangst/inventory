@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-def search_pubchem(smiles, csv="Walczak-Inventory.csv", threshold=70):
+def search_pubchem(smiles, csv="Walczak-Inventory.xlsx", threshold=70):
     try:
         url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/similarity/smiles/{smiles}/JSON?Threshold={threshold}&MaxRecords=100"
         response = requests.get(url)
