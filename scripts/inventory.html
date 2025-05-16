@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ketcher + PubChem Search</title>
+    <script type="text/javascript" src="https://unpkg.com/ketcher/dist/ketcher.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/ketcher/dist/ketcher.css">
+</head>
+<body>
+    <h1>Draw a Molecule</h1>
+    <div id="ketcher-container" style="width: 500px; height: 400px;"></div>
+    
+    <button id="search-btn">Search PubChem</button>
+    <div id="result"></div>
+
+    <script>
+        let ketcherApplet;
+
+        window.onload = function() {
+            ketcherApplet = new Ketcher.App({
+                container: document.getElementById('ketcher-container'),
+                options: {
+                    height: '100%',
+                    width: '100%',
+                }
+            });
+        };
+
+        document.getElementById('search-btn').addEventListener('click', async function() {
+            const smiles = ketcherApplet.getSmiles();
+            const response = await fetch('https://your-flask-app.onrender.com/search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ smiles: smiles })
+            });
+            const data = await response.json();
+            document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
+        });
+    </script>
+</body>
+</html>
