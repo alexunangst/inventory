@@ -1,6 +1,0 @@
-{
-  "version": 2,
-  "builds": [
-    { "src": "inventory_scan.py", "use": "@vercel/python" }
-  ]
-}
